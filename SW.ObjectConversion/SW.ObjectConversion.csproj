@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>SimplyWorks.ObjectConversion</PackageId>
+    <Authors>SimplyWorks</Authors>
+    <Product>SimplyWorks.ObjectConversion</Product>
+  </PropertyGroup>
+
+</Project>
