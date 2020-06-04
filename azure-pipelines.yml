@@ -23,8 +23,6 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
-    feedsToUse: 'select'
-    vstsFeed: 'e5fb2e9c-1207-48a4-8f7b-2e6b32308210'
 
 
 - task: DotNetCoreCLI@2
@@ -42,6 +40,7 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     command: pack
     packagesToPack: 'SW.ObjectConversion/SW.ObjectConversion.csproj;'
@@ -49,6 +48,7 @@ steps:
     versioningScheme: byBuildNumber
 
 - task: NuGetCommand@2
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
