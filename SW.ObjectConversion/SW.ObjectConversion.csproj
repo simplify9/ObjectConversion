@@ -3,8 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>SimplyWorks.ObjectConversion</PackageId>
-    <Authors>SimplyWorks</Authors>
+    <Authors>Simplify9</Authors>
     <Product>SimplyWorks.ObjectConversion</Product>
+    <PackageProjectUrl>https://github.com/simplify9/ObjectConversion</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/simplify9/ObjectConversion</RepositoryUrl>
+    <Copyright>Simplify9</Copyright>
+    <Company>Simplify9</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>  
   </PropertyGroup>
 
 </Project>
