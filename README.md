@@ -1,20 +1,16 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# SW.ObjectConversion
+[![Build Status](https://dev.azure.com/simplify9/Github%20Pipelines/_apis/build/status/simplify9.ObjectConversion?branchName=master)]
+| **Package**       | **Version** |
+| :----------------:|:----------------------:|
+| ``SimplyWorks.ObjectConversion``|![Nuget](https://img.shields.io/nuget/v/SimplyWorks.ObjectConversion?style=for-the-badge)|
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+[SW.ObjectConversion](https://www.nuget.org/packages/SimplyWorks.ObjectConversion/) is a set of
+conversion extensions methods to stream line object conversion, especially in its tedious and
+nuanced forms. (*Eg:* Casting an ISO datetime string into a DateTime object)
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Conversion Methods
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+- **ConvertValueToType**: extends `object` and takes in a `Type` as a parameter and goes through the process of different methods of conversion to get the optimal result. Note that is optimized to avoid redundant or unnecessary conversions.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Getting support 👷
+If you encounter any bugs, don't hesitate to submit an [issue](https://github.com/simplify9/ObjectConversion/issues). We'll get back to you promptly!
