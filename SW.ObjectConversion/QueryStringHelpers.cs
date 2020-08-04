@@ -17,12 +17,8 @@ namespace SW.ObjectConversion
             string[] props = typeof(T).GetProperties()
                             .Select(property => {
 
-                                bool isArray = property.PropertyType.IsArray;
-                                bool isCollection = property.PropertyType.GetInterfaces()
-                                                    .Where(i => i.IsGenericType)
-                                                    .Select(i => i.GetGenericTypeDefinition())
-                                                    .Contains(typeof(ICollection<>));
-                                if (isArray || isCollection)
+                                bool isEnumerable = property.PropertyType.GetInterface(nameof(IEnumerable)) != null;
+                                if (isEnumerable)
                                 {
                                     IEnumerable tmp = ((IEnumerable)property.GetValue(obj).ConvertValueToType(property.PropertyType));
                                     IEnumerable<string> enumerable = tmp.Cast<string>();
@@ -70,7 +66,7 @@ namespace SW.ObjectConversion
                     object value = null;
                     Type propType = property.PropertyType;
                     if (propType.IsInterface)
-                        throw new SWException($"Type of {property.Name} is an interface.");
+                        throw new SWException($"Type of {property.Name} is an interface. If it's a collection type, consider using List<> or an array.");
 
                     StringValues queries = req.Query[property.Name];
 
