@@ -58,7 +58,8 @@ namespace SW.ObjectConversion
             return queryString;
         }
 
-        public static object GetObjectFromQueryString(Type type, HttpRequest httpRequest)
+
+        public static object GetFromQueryString(Type type, HttpRequest req)
         {
             try
             {
@@ -67,28 +68,31 @@ namespace SW.ObjectConversion
                 foreach (var property in properties)
                 {
                     object value = null;
-                    StringValues queries = httpRequest.Query[property.Name];
+                    Type propType = property.PropertyType;
+                    if (propType.IsInterface)
+                        throw new SWException($"Type of {property.Name} is an interface.");
 
-                    bool isArray = property.PropertyType.IsArray;
-                    bool isCollection = property.PropertyType.GetInterfaces()
-                                        .Where(i => i.IsGenericType)
-                                        .Select(i => i.GetGenericTypeDefinition())
-                                        .Contains(typeof(ICollection<>));
+                    StringValues queries = req.Query[property.Name];
 
-                    if (isArray || isCollection)
+                    bool isEnumerable = property.PropertyType.GetInterface(nameof(IEnumerable)) != null;
+
+                    if (isEnumerable)
                     {
-                        Type nested = property.PropertyType.GetElementType() ?? property.PropertyType.GetGenericArguments()[0];
+                        Type nested = propType.GetElementType() ?? propType.GetGenericArguments()[0];
                         Array tmp = Array.CreateInstance(nested, queries.Count);
+
                         var queryObjects = queries.Select(q => q.ConvertValueToType(nested));
                         for (int i = 0; i < queries.Count; i++)
                             tmp.SetValue(queryObjects.ElementAt(i), i);
 
-                        value = isArray ? tmp : Activator.CreateInstance(property.PropertyType, new object[] { tmp });
+                        Type listType = propType.IsInterface ? typeof(List<object>) : propType;
+                        bool isArray = propType.IsArray;
+                        value = isArray ? tmp : Activator.CreateInstance(listType, new object[] { new object[] { tmp } });
                     }
                     else
                     {
-                        string valueAsString = queries.FirstOrDefault();
-                        value = valueAsString.ConvertValueToType(property.PropertyType);
+                        value = queries.FirstOrDefault()
+                                .ConvertValueToType(propType);
                     }
 
                     if (value == null)
@@ -106,7 +110,6 @@ namespace SW.ObjectConversion
 
         }
 
-
-
     }
+
 }
